@@ -36,4 +36,31 @@ export const getTaskById = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({ message: 'Something went wrong' });
     }
+};
+
+// Update Task
+
+export const updateTask = async (req: Request, res: Response) => {
+    try {
+        const { title, description, completed } = req.body;
+        const task = await Task.findByIdAndUpdate(
+            req.params.id,
+            { title, description, completed },
+            { new: true }
+        );
+        if (!task) {
+            return res.status(400).json({ message: 'No task found' });
+        }
+        res.status(200).json(task);
+    } catch (error) {
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+// Delete Task
+
+export const deleteTask = async (req: Request, res: Response) => {
+    try {
+        const task = await Task.findByIdAndDelete(req.params.id)
+    }
 }
