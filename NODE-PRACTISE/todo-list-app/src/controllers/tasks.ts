@@ -25,3 +25,15 @@ export const getTasks = async (req: Request, res: Response) => {
 }
 
 // Get Task by ID
+
+export const getTaskById = async (req: Request, res: Response) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) {
+            return res.status(400).json({ message: 'No task found' });
+        }
+        res.status(200).json(task);
+    } catch (error) {
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+}
