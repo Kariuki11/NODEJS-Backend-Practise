@@ -1,6 +1,10 @@
-import express from 'express
+import express from 'express',
 import cors from 'cors';
 import connectDB from './utils/db';
+import taskRoutes from './routes/tasks';
+import { setupSwagger } from './utils/swagger';
+setupSwagger(app);
+
 
 const app = express();
 
