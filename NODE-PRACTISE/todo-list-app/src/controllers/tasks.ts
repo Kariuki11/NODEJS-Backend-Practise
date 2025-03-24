@@ -61,6 +61,14 @@ export const updateTask = async (req: Request, res: Response) => {
 
 export const deleteTask = async (req: Request, res: Response) => {
     try {
-        const task = await Task.findByIdAndDelete(req.params.id)
+        const task = await Task.findByIdAndDelete(req.params.id);
+        if (!task) {
+            return res.status(400).json({
+                message: 'No task found'
+            });
+        }
+        res.status(200).json({ message: 'Task deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Something went wrong' });
     }
 }
