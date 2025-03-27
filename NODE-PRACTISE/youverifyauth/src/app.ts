@@ -10,6 +10,11 @@ const app = express();
 app.use(express.json());
 
 // Routes
-app.get('/verify/:userId', verifyUser);
+app.get('/verify/:userId', (req, res) => {
+  verifyUser(req, res).catch(error => {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  });
+});
 
 export default app;
