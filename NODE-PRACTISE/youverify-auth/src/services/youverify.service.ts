@@ -13,21 +13,27 @@ console.log("Loaded YouVerify API Key:", YOUVERIFY_API_KEY);
 export class YouVerifyService {
   static async verifyUserId(userId: string) {
     try {
-      const response = await axios.get(`${BASE_URL}?id=${userId}`, {
-        headers: {
-          'Authorization': `Bearer ${YOUVERIFY_API_KEY}`,  // Use Bearer if required
-          'Content-Type': 'application/json'
+      console.log("Verifying User ID:", userId);
+  
+      const response = await axios.post(
+        BASE_URL,
+        { id: userId },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'token': YOUVERIFY_API_KEY
+          }
         }
-      });
+      );
   
       console.log("YouVerify API Response:", response.data);
       return response.data;
     } catch (error: any) {
       console.error("YouVerify API Error:", error.response?.data || error.message);
+      console.error("Full Error:", error.toJSON ? error.toJSON() : error);
       throw error;
     }
-  }
-  
+  }  
   // static async verifyUserId(userId: string) {
   //   try {
   //     console.log("Verifying User ID:", userId); // Log user ID before request
