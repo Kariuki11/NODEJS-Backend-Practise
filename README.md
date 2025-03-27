@@ -1,0 +1,1 @@
+curl -X GET "http://localhost:8000/verify/14641078" -H "Content-Type: application/json"
