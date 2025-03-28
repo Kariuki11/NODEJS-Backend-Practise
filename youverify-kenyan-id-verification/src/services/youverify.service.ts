@@ -28,6 +28,8 @@ export class YouVerifyService {
   async verifyKenyanID(payload: KenyanIDVerificationPayload) {
     try {
       const url = `${this.baseUrl}/v2/api/identity/ke/id-scrub`;
+
+      console.log('url', url)
       
       const headers = {
         'Content-Type': 'application/json',
@@ -55,6 +57,7 @@ export class YouVerifyService {
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        console.log(`Axios error: ${error}`);
         console.error('YouVerify API error details:', {
           status: error.response?.status,
           statusText: error.response?.statusText,

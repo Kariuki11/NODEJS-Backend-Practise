@@ -21,6 +21,8 @@ export const verifyKenyanID = async (req: Request, res: Response): Promise<void>
             phoneNumber
         });
 
+        console.log('Verification result:', verificationResult);
+
         res.json(verificationResult);
     } catch (error: any) {
         console.error('Verification error:', error);
