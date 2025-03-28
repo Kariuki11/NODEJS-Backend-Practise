@@ -33,7 +33,7 @@ export class YouVerifyService {
         'Content-Type': 'application/json',
         'token': this.apiKey
       };
-
+  
       const requestBody = {
         id: payload.idNumber,
         firstName: payload.firstName,
@@ -43,15 +43,58 @@ export class YouVerifyService {
         phoneNumber: payload.phoneNumber,
         isSubjectConsent: true
       };
-
-      const response = await axios.post(url, requestBody, { headers });
+  
+      console.log('Sending request to YouVerify:', { url, headers, body: requestBody });
+  
+      const response = await axios.post(url, requestBody, { 
+        headers,
+        timeout: 10000 // 10 second timeout
+      });
+      
+      console.log('YouVerify response:', response.data);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('YouVerify API error:', error.response?.data);
+        console.error('YouVerify API error details:', {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          config: error.config
+        });
         throw new Error(error.response?.data?.message || 'Verification failed');
       }
+      console.error('Unexpected error:', error);
       throw new Error('An unexpected error occurred');
     }
   }
+
+  // async verifyKenyanID(payload: KenyanIDVerificationPayload) {
+  //   try {
+  //     const url = `${this.baseUrl}/v2/api/identity/ke/id-scrub`;
+      
+  //     const headers = {
+  //       'Content-Type': 'application/json',
+  //       'token': this.apiKey
+  //     };
+
+  //     const requestBody = {
+  //       id: payload.idNumber,
+  //       firstName: payload.firstName,
+  //       lastName: payload.lastName,
+  //       middleName: payload.middleName,
+  //       dob: payload.dateOfBirth,
+  //       phoneNumber: payload.phoneNumber,
+  //       isSubjectConsent: true
+  //     };
+
+  //     const response = await axios.post(url, requestBody, { headers });
+  //     return response.data;
+  //   } catch (error) {
+  //     if (axios.isAxiosError(error)) {
+  //       console.error('YouVerify API error:', error.response?.data);
+  //       throw new Error(error.response?.data?.message || 'Verification failed');
+  //     }
+  //     throw new Error('An unexpected error occurred');
+  //   }
+  // }
 }
