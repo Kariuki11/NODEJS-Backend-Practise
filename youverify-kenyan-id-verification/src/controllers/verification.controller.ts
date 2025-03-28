@@ -3,12 +3,13 @@ import { YouVerifyService } from '../services/youverify.service';
 
 const youVerifyService = new YouVerifyService();
 
-export const verifyKenyanID = async (req: Request, res: Response) => {
+export const verifyKenyanID = async (req: Request, res: Response): Promise<void> => {
     try {
         const { idNumber, firstName, lastName, middleName, dateOfBirth, phoneNumber } = req.body;
 
         if (!idNumber) {
-            return res.status(400).json({ error: 'ID number is required' });
+            res.status(400).json({ error: 'ID number is required' });
+            return;
         }
 
         const verificationResult = await youVerifyService.verifyKenyanID({
