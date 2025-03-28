@@ -1,6 +1,6 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
-import { VerificationController } from './controllers/verification.controller';
+import { verifyKenyanID } from './controllers/verification.controller';
 
 const app = express();
 
@@ -9,11 +9,11 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.post('/api/verify/kenyan-id', VerificationController.verifyKenyanID);
+app.post('/api/verify/kenyan-id', verifyKenyanID);
 
 // Health check
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK' });
+app.get('/health', (req: Request, res: Response) => {
+    res.status(200).json({ status: 'OK' });
 });
 
 export default app;
