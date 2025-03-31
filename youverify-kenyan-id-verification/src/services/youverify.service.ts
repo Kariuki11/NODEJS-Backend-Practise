@@ -5,6 +5,7 @@ dotenv.config();
 
 interface KenyanIDVerificationPayload {
   idNumber: string;
+  idType?: 'national-id' | 'passport' | 'alien-id';
   firstName?: string;
   lastName?: string;
   middleName?: string;
@@ -28,6 +29,7 @@ export class YouVerifyService {
   async verifyKenyanID(payload: KenyanIDVerificationPayload) {
     try {
       const url = `${this.baseUrl}/v2/api/identity/ke/id-scrub`;
+      console.log('payload', payload)
 
       console.log('url', url)
       
@@ -38,13 +40,15 @@ export class YouVerifyService {
   
       const requestBody = {
         id: payload.idNumber,
-        firstName: payload.firstName,
-        lastName: payload.lastName,
-        middleName: payload.middleName,
-        dob: payload.dateOfBirth,
-        phoneNumber: payload.phoneNumber,
+        idType: payload.idType || 'national-id',
         isSubjectConsent: true
+        // firstName: payload.firstName,
+        // lastName: payload.lastName,
+        // middleName: payload.middleName,
+        // dob: payload.dateOfBirth,
+        // phoneNumber: payload.phoneNumber,
       };
+      //console.log('payload', payload)
   
       console.log('Sending request to YouVerify:', { url, headers, body: requestBody });
   

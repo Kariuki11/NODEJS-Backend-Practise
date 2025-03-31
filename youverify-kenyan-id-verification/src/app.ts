@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Routes    - This is where you define your API endpoints  Where to jus take the lines frontend endpoint
 app.post('/api/verify/kenyan-id', (req, res) => {
     verifyKenyanID(req, res).catch(err => {
         console.error('Unhandled error:', err);

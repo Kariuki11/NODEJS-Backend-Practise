@@ -5,20 +5,21 @@ const youVerifyService = new YouVerifyService();
 
 export const verifyKenyanID = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { idNumber, firstName, lastName, middleName, dateOfBirth, phoneNumber } = req.body;
+        const { id, idType, isSubjectConsent } = req.body;
 
-        if (!idNumber) {
+        if (!id) {
             res.status(400).json({ error: 'ID number is required' });
             return;
         }
 
         const verificationResult = await youVerifyService.verifyKenyanID({
-            idNumber,
-            firstName,
-            lastName,
-            middleName,
-            dateOfBirth,
-            phoneNumber
+            idNumber: id,
+            idType,
+            // firstName,
+            // lastName,
+            // middleName,
+            // dateOfBirth,
+            // phoneNumber
         });
 
         console.log('Verification result:', verificationResult);
